@@ -1,6 +1,6 @@
 import findimage
 import pixie
-import std/[strformat, os]
+import std/[strformat, os, strutils]
 
 proc main() =
   let largeImagePath = if paramCount() >= 1: paramStr(1) else: "test_images/haystack.jpg"
