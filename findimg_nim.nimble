@@ -5,6 +5,7 @@ author        = "findimg_nim"
 description   = "Pure Nim image template matching library"
 license       = "MIT"
 srcDir        = "."
+bin           = @["findimg"]
 
 # Dependencies
 
