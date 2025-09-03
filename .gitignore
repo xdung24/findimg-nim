@@ -1,10 +1,4 @@
 .vscode
-test
-testdata
 *.exe
-findimg
-findimage
-findimg_nim
-output.html
-result.html
-
+nimble.develop
+nimble.paths

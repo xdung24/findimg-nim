@@ -22,7 +22,7 @@ type
 
 const
   DEFAULT_OPTS* = Opts(
-    k: 6,
+    k: 1,
     imgMinWidth: 8,
     imgMaxWidth: 256,
     subMaxDiv: 64,
