@@ -1,3 +1,4 @@
+import times
 import findimage
 import pixie
 import std/[os, strformat, parseopt, json, strutils]
@@ -12,7 +13,7 @@ Usage: findimg_nim [options] <large_image> <small_image>
 
 Options:
   -h, --help                Show this help message
-  -k NUM                    Number of top matches to return (default: 6)
+  -k NUM                    Number of top matches to return (default: 1)
   -o FORMAT                 Output format: text, json (default: text)
   -v, --verbose             Verbose output
   --img-min-width NUM       Minimum image width for processing (default: 8)
@@ -119,27 +120,20 @@ proc main() =
     usage()
     return
   
-  if not fileExists(largeImagePath):
-    echo fmt"Error: Large image file '{largeImagePath}' not found"
-    return
-  
-  if not fileExists(smallImagePath):
-    echo fmt"Error: Small image file '{smallImagePath}' not found"
-    return
-  
   try:
     # Load images
+
     let largeImage = readImage(largeImagePath)
     let smallImage = readImage(smallImagePath)
     
     # Find matches
     let matches = findImage(largeImage, smallImage, opts)
-    
+
     # Output results
     case outputFormat
     of Text:
       for match in matches:
-        echo fmt"{match.confident:>8.6f} {match.bounds.min.x:>4} {match.bounds.min.y:>4} {match.bounds.width:>4} {match.bounds.height:>4} {match.centerX:>4} {match.centerY:>4}"
+        echo fmt"{match.confident:>8.4f} {match.bounds.min.x:>4} {match.bounds.min.y:>4} {match.centerX:>4} {match.centerY:>4}"
     
     of Json:
       var jsonMatches = newJArray()
@@ -148,8 +142,6 @@ proc main() =
         var bounds = newJObject()
         bounds["x"] = newJInt(match.bounds.min.x)
         bounds["y"] = newJInt(match.bounds.min.y)
-        bounds["w"] = newJInt(match.bounds.width)
-        bounds["h"] = newJInt(match.bounds.height)
         
         var center = newJObject()
         center["x"] = newJInt(match.centerX)
@@ -164,7 +156,6 @@ proc main() =
       var result = newJObject()
       result["matches"] = jsonMatches
       echo result.pretty()
-
   except Exception as e:
     echo fmt"Error: {e.msg}"
 

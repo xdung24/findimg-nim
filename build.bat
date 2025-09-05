@@ -1,7 +1,7 @@
 @echo off
-REM Build script for findimg_nim
+REM Build script for findimg
 
-echo Building findimg_nim...
+echo Building findimg...
 
 REM Install dependencies
 echo Installing dependencies...

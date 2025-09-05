@@ -9,5 +9,6 @@ bin           = @["findimg"]
 
 # Dependencies
 
+
 requires "nim >= 1.6.0"
 requires "pixie >= 5.0.0"
